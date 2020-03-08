@@ -5,6 +5,8 @@ using UnityEngine;
 public class Group : MonoBehaviour {
     // Time since last gravity tick
     float lastFall = 0;
+    // Falling down after first keyDownPressed.
+    bool fallMode = false;
 
     // Start is called before the first frame update
     void Start() {
@@ -55,8 +57,13 @@ public class Group : MonoBehaviour {
                 // It's not valid. revert.
                 transform.Rotate(0, 0, 90);
         }
+        // Enable fall mode?
+        if (Input.GetKeyDown(KeyCode.DownArrow)) {
+            fallMode = true;
+        }
         // Move Downwards and Fall
         else if (Input.GetKeyDown(KeyCode.DownArrow) ||
+            (Input.GetKey(KeyCode.DownArrow) && fallMode) ||
          Time.time - lastFall >= 1) {
             // Modify position
             transform.position += new Vector3(0, -1, 0);
